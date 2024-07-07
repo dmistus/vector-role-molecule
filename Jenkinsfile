@@ -10,12 +10,8 @@ pipeline {
                 branch: 'main'
             }
         }
-        stage('preparation') {
-            steps {
-                echo 'Start preparation'
-                sh 'pip3 install -r tox-requirements.txt'
-                        }
-        }
+                            }
+
         stage('Start molecule test') {
             steps {
                 echo 'Run molecule test'
