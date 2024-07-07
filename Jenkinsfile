@@ -10,8 +10,7 @@ pipeline {
                 branch: 'main'
             }
         }
-                            }
-
+        
         stage('Start molecule test') {
             steps {
                 echo 'Run molecule test'
@@ -19,3 +18,4 @@ pipeline {
             }
         }
     }
+}
