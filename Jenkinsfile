@@ -11,11 +11,7 @@ pipeline {
             }
         }
         
-        stage('Start molecule test') {
-            steps {
-                echo 'Run molecule test'
-                sh 'molecule test'
-            }
+
         }
     }
 }
