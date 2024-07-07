@@ -9,8 +9,9 @@ pipeline {
                 url: 'git@github.com:dmistus/vector-role-molecule.git',
                 branch: 'main'
             }
+        }
+        
 
-
-
+        }
     }
-}
+
