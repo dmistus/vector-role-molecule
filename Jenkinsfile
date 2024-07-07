@@ -9,7 +9,7 @@ pipeline {
                 url: 'git@github.com:dmistus/vector-role-molecule.git',
                 branch: 'main'
             }
-
+            }
             stage('Start molecule test') {
             steps {
                 echo 'Get from GIT repository'
@@ -26,5 +26,4 @@ pipeline {
 
 
         }
-    }
     }
