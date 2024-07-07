@@ -13,9 +13,9 @@ pipeline {
         stage('preparation') {
             steps {
                 echo 'Start preparation'
-                sh 'pip3 install -r tox-requirements.txt'
-                sh 'pip install "molecule[lint]"'
-                sh 'pip install "molecule[docker,lint]"'
+            #    sh 'pip3 install -r tox-requirements.txt'
+            #    sh 'pip install "molecule[lint]"'
+            #    sh 'pip install "molecule[docker,lint]"'
             }
         }
         stage('Start molecule test') {
