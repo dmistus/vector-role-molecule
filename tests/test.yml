@@ -2,4 +2,5 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - vector-role-no-molecule
+    - vector-role
+    

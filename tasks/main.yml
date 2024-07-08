@@ -1,16 +1,32 @@
 ---
-- name: Download and install vector packages for UBUNTU
-  become: true
-  ansible.builtin.apt:
-    deb: https://packages.timber.io/vector/{{ vector_version }}/vector_{{ vector_version }}-1_amd64.deb
-  notify: Start Vector service
-  when: ansible_facts['distribution'] == "Ubuntu"
-
-- name: Download and install vector packages for Centos8
-  become: true
-  ansible.builtin.yum:
-    name: https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm
-    state: present
-    disable_gpg_check: true
-  notify: Start Vector service
-  when: ansible_facts['distribution'] == "CentOS"
+# tasks file for vector-role
+- block:
+  - name: Get vector distrib
+    become: true
+    ansible.builtin.get_url:
+      url: "https://packages.timber.io/vector/latest/vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
+      dest: "./tmp/vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
+      mode: 0644
+  - name: Install vector package
+    become: true
+    ansible.builtin.yum:
+      name:
+        - "./tmp/vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
+  - name: Redefine vector config name
+    become: true
+    tags: vector_config
+    ansible.builtin.lineinfile:
+      path: /etc/default/vector
+      regexp: "VECTOR_CONFIG="
+      line: VECTOR_CONFIG=/etc/vector/config.yaml
+  - name: Create vector config
+    become: true
+    tags: vector_config
+    ansible.builtin.copy:
+      dest: /etc/vector/config.yaml
+      content: |
+        {{ vector_config | to_nice_yaml(indent=2) }}
+#    notify: Start Vector service
+  - name: Flush handlers
+    meta: flush_handlers
+    

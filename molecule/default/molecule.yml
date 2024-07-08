@@ -3,15 +3,20 @@ dependency:
   name: galaxy
 driver:
   name: docker
-platforms:  
-  - name: Ubuntu_latest
-    image: ubuntu:latest
-    dockerfile: Dockerfile
-    command: /lib/systemd/systemd
-    privileged: true
-    pre_build_image: false
-
-#   - name: C8
-#     image: quay.io/centos/centos:stream8
-#     command: /sbin/init
-#     privileged: True
+  options:
+    D: true
+    vv: true
+lint: |
+  ansible-lint .
+  yamllint .
+platforms:
+  - name: centos7
+    image: docker.io/pycontribs/centos:7
+    pre_build_image: true
+provisioner:
+  name: ansible
+  options:
+    D: true
+    vv: true
+verifier:
+  name: ansible
