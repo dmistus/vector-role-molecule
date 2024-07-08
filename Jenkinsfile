@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'ansible'
+        label '1'
     }
     stages {
         stage('Git') {
